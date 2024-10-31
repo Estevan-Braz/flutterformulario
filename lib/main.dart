@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final String title;
-  const MyHomePage({super.key, required this.title});  
+  const MyHomePage({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,66 @@ class MyHomePage extends StatelessWidget {
         title: Text(title),
       ),
       body: Center(
-        child: Text(
-          'Hello, World!',
-        ),
+        child: Formulario(),
+      ),
+    );
+  }
+}
+
+class Formulario extends StatefulWidget {
+  @override
+  _FormularioState createState() => _FormularioState();
+}
+
+class _FormularioState extends State<Formulario> {
+  final _nomeController = TextEditingController();
+  final _dataNascimentoController = TextEditingController();
+  final _senhaController = TextEditingController();
+  String? _estadoSelecionado;
+  final List<String> _estados = [
+    'Acre',
+    'Amapa',
+    'Paraná',
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _nomeController,
+            decoration: InputDecoration(labelText: 'Nome Completo'),
+          ),
+          TextFormField(
+            controller: _dataNascimentoController,
+            decoration: InputDecoration(
+              labelText: 'Data de Nascimento',
+            ),
+            keyboardType: TextInputType.datetime,
+          ),
+          TextFormField(
+            controller: _senhaController,
+            decoration: InputDecoration(
+              labelText: 'Senha',
+            ),
+            obscureText: true,
+          ),
+          DropdownButtonFormField(
+            value: _estadoSelecionado,
+            items: _estados.map((String estado) {
+              return DropdownMenuItem(
+                value: estado,
+                child: Text(estado),
+              );
+            }).toList(),
+            onChanged: (novoValor) {
+              setState(() {
+                _estadoSelecionado = novoValor;
+              });
+            },
+          ),
+        ],
       ),
     );
   }

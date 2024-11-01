@@ -46,6 +46,7 @@ class Formulario extends StatefulWidget {
 }
 
 class _FormularioState extends State<Formulario> {
+  final _formKey = GlobalKey<FormState>();
   final _nomeController = TextEditingController();
   final _dataNascimentoController = TextEditingController();
   final _senhaController = TextEditingController();
@@ -59,41 +60,48 @@ class _FormularioState extends State<Formulario> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          TextFormField(
-            controller: _nomeController,
-            decoration: InputDecoration(labelText: 'Nome Completo'),
-          ),
-          TextFormField(
-            controller: _dataNascimentoController,
-            decoration: InputDecoration(
-              labelText: 'Data de Nascimento',
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: [
+            TextFormField(
+              controller: _nomeController,
+              decoration: InputDecoration(labelText: 'Nome Completo'),
             ),
-            keyboardType: TextInputType.datetime,
-          ),
-          TextFormField(
-            controller: _senhaController,
-            decoration: InputDecoration(
-              labelText: 'Senha',
+            TextFormField(
+              controller: _dataNascimentoController,
+              decoration: InputDecoration(
+                labelText: 'Data de Nascimento',
+              ),
+              keyboardType: TextInputType.datetime,
             ),
-            obscureText: true,
-          ),
-          DropdownButtonFormField(
-            value: _estadoSelecionado,
-            items: _estados.map((String estado) {
-              return DropdownMenuItem(
-                value: estado,
-                child: Text(estado),
-              );
-            }).toList(),
-            onChanged: (novoValor) {
-              setState(() {
-                _estadoSelecionado = novoValor;
-              });
-            },
-          ),
-        ],
+            TextFormField(
+              controller: _senhaController,
+              decoration: InputDecoration(
+                labelText: 'Senha',
+              ),
+              obscureText: true,
+            ),
+            DropdownButtonFormField(
+              value: _estadoSelecionado,
+              items: _estados.map((String estado) {
+                return DropdownMenuItem(
+                  value: estado,
+                  child: Text(estado),
+                );
+              }).toList(),
+              onChanged: (novoValor) {
+                setState(() {
+                  _estadoSelecionado = novoValor;
+                });
+              },
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text("Enviar"),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -50,6 +50,7 @@ class _FormularioState extends State<Formulario> {
   final _nomeController = TextEditingController();
   final _dataNascimentoController = TextEditingController();
   final _senhaController = TextEditingController();
+  final _confirmarSenhaController = TextEditingController();
   String? _estadoSelecionado;
   final List<String> _estados = [
     'Acre',
@@ -70,7 +71,7 @@ class _FormularioState extends State<Formulario> {
                   labelText: 'Nome Completo',
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value == null) {
                     return "Por favor, digite um nome";
                   }
                   return null;
@@ -89,6 +90,21 @@ class _FormularioState extends State<Formulario> {
               ),
               obscureText: true,
             ),
+            TextFormField(
+                controller: _confirmarSenhaController,
+                decoration: InputDecoration(
+                  labelText: 'Confirmar Senha',
+                ),
+                obscureText: true,
+                validator: (valor) {
+                  if (valor == null || valor.isEmpty) {
+                    return "Preencha o campo de confirmar senha";
+                  }
+                  if (valor != _senhaController.text) {
+                    return "Senhas não estão iguais";
+                  }
+                  return null;
+                }),
             DropdownButtonFormField(
               value: _estadoSelecionado,
               items: _estados.map((String estado) {

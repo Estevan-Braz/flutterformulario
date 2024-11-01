@@ -65,9 +65,16 @@ class _FormularioState extends State<Formulario> {
         child: ListView(
           children: [
             TextFormField(
-              controller: _nomeController,
-              decoration: InputDecoration(labelText: 'Nome Completo'),
-            ),
+                controller: _nomeController,
+                decoration: InputDecoration(
+                  labelText: 'Nome Completo',
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Por favor, digite um nome";
+                  }
+                  return null;
+                }),
             TextFormField(
               controller: _dataNascimentoController,
               decoration: InputDecoration(
@@ -97,7 +104,14 @@ class _FormularioState extends State<Formulario> {
               },
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (_formKey.currentState != null &&
+                    _formKey.currentState!.validate()) {
+                  print("Validou");
+                } else {
+                  print("Deu Ruim");
+                }
+              },
               child: Text("Enviar"),
             ),
           ],
